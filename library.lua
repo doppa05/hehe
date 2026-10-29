@@ -2110,23 +2110,20 @@ local Library do
                     AutoButtonColor = false
                 })
                 Instances:Create("UICorner", { Parent = Items["LightningBtn"].Instance, CornerRadius = UDimNew(0, 8) })
-                local ZapIcon = Instances:Create("TextLabel", {
+                local ZapIcon = Instances:Create("ImageLabel", {
                     Parent = Items["LightningBtn"].Instance,
                     AnchorPoint = Vector2New(0.5, 0.5),
                     Position = UDim2New(0.5, 0, 0.5, 0),
-                    Size = UDim2New(1, 0, 1, 0),
-                    Text = "⚡",
-                    RichText = true,
-                    TextColor3 = FromRGB(255, 255, 255),
-                    TextSize = 15,
-                    FontFace = Library.Font,
+                    Size = UDim2New(0, 15, 0, 15),
+                    Image = "rbxassetid://7733741741",
+                    ImageColor3 = FromRGB(255, 255, 255),
                     BackgroundTransparency = 1,
                     BorderSizePixel = 0
                 })
                 Items["LightningBtn"]:Connect("MouseButton1Click", function()
-                    ZapIcon:Tween(TweenInfo.new(0.15), {TextTransparency = 0.3})
+                    ZapIcon:Tween(TweenInfo.new(0.15), {ImageTransparency = 0.4})
                     task.wait(0.15)
-                    ZapIcon:Tween(TweenInfo.new(0.15), {TextTransparency = 0})
+                    ZapIcon:Tween(TweenInfo.new(0.15), {ImageTransparency = 0})
                 end)
 
                 -- Settings Button
@@ -2141,16 +2138,13 @@ local Library do
                 })
                 Instances:Create("UICorner", { Parent = Items["SettingsBtn"].Instance, CornerRadius = UDimNew(0, 8) })
                 Instances:Create("UIStroke", { Parent = Items["SettingsBtn"].Instance, Color = FromRGB(38, 44, 58), Thickness = 1 })
-                local GearIcon = Instances:Create("TextLabel", {
+                local GearIcon = Instances:Create("ImageLabel", {
                     Parent = Items["SettingsBtn"].Instance,
                     AnchorPoint = Vector2New(0.5, 0.5),
                     Position = UDim2New(0.5, 0, 0.5, 0),
-                    Size = UDim2New(1, 0, 1, 0),
-                    Text = "⚙️",
-                    RichText = true,
-                    TextColor3 = FromRGB(180, 186, 202),
-                    TextSize = 15,
-                    FontFace = Library.Font,
+                    Size = UDim2New(0, 15, 0, 15),
+                    Image = "rbxassetid://7734053495",
+                    ImageColor3 = FromRGB(180, 186, 202),
                     BackgroundTransparency = 1,
                     BorderSizePixel = 0
                 })
@@ -2245,15 +2239,13 @@ local Library do
                 })
                 Instances:Create("UICorner", { Parent = Items["BottomDocBadge"].Instance, CornerRadius = UDimNew(0, 6) })
                 Instances:Create("UIStroke", { Parent = Items["BottomDocBadge"].Instance, Color = FromRGB(38, 44, 58), Thickness = 1 })
-                local BottomDocImg = Instances:Create("TextLabel", {
+                local BottomDocImg = Instances:Create("ImageLabel", {
                     Parent = Items["BottomDocBadge"].Instance,
                     AnchorPoint = Vector2New(0.5, 0.5),
                     Position = UDim2New(0.5, 0, 0.5, 0),
-                    Size = UDim2New(1, 0, 1, 0),
-                    Text = "📜",
-                    RichText = true,
-                    TextSize = 14,
-                    FontFace = Library.Font,
+                    Size = UDim2New(0, 14, 0, 14),
+                    Image = "rbxassetid://7733789088",
+                    ImageColor3 = Library.Theme["Accent"] or FromRGB(129, 140, 248),
                     BackgroundTransparency = 1,
                     BorderSizePixel = 0
                 })
@@ -2319,22 +2311,21 @@ local Library do
                     ApplyStrokeMode = Enum.ApplyStrokeMode.Border
                 }):AddToTheme({Color = "Outline"})
                 
-                Items["SearchIcon"] = Instances:Create("TextLabel", {
+                Items["SearchIcon"] = Instances:Create("ImageLabel", {
                     Parent = Items["Search"].Instance,
                     Name = "\0",
-                    TextTransparency = 0.6,
+                    ImageTransparency = 0.6,
+                    BorderColor3 = FromRGB(0, 0, 0),
                     AnchorPoint = Vector2New(1, 0.5),
-                    Text = "🔍",
-                    RichText = true,
-                    TextColor3 = FromRGB(200, 204, 216),
-                    TextSize = 14,
-                    FontFace = Library.Font,
+                    Image = "rbxassetid://7734052925",
+                    ImageColor3 = FromRGB(200, 204, 216),
                     BackgroundTransparency = 1,
                     Position = UDim2New(1, -9, 0.5, 0),
-                    Size = UDim2New(0, 16, 0, 16),
+                    Size = UDim2New(0, 15, 0, 15),
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(255, 255, 255)
-                })
+                })  
+                Items["SearchIcon"]:AddToTheme({ImageColor3 = "Text"})
                 
                 Items["Settings"] = Instances:Create("Frame", {
                     Parent = Items["Bottom"].Instance,
@@ -2361,22 +2352,21 @@ local Library do
                     ApplyStrokeMode = Enum.ApplyStrokeMode.Border
                 }):AddToTheme({Color = "Outline"})
                 
-                Items["SettingsIcon"] = Instances:Create("TextLabel", {
+                Items["SettingsIcon"] = Instances:Create("ImageLabel", {
                     Parent = Items["Settings"].Instance,
                     Name = "\0",
-                    TextTransparency = 0.6,
+                    ImageTransparency = 0.6,
+                    BorderColor3 = FromRGB(0, 0, 0),
                     AnchorPoint = Vector2New(0.5, 0.5),
-                    Text = "⚙️",
-                    RichText = true,
-                    TextColor3 = FromRGB(200, 204, 216),
-                    TextSize = 14,
-                    FontFace = Library.Font,
+                    Image = "rbxassetid://7734053495",
+                    ImageColor3 = FromRGB(200, 204, 216),
                     BackgroundTransparency = 1,
                     Position = UDim2New(0.5, 0, 0.5, 0),
-                    Size = UDim2New(0, 16, 0, 16),
+                    Size = UDim2New(0, 15, 0, 15),
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(255, 255, 255)
-                })                                
+                })  
+                Items["SettingsIcon"]:AddToTheme({ImageColor3 = "Text"})                                
                                 
                 Items["Content"] = Instances:Create("Frame", {
                     Parent = Items["MainFrame"].Instance,
@@ -2411,19 +2401,19 @@ local Library do
                 })
 
                 Items["Settings"]:OnHover(function()
-                    Items["SettingsIcon"]:Tween(nil, {TextTransparency = 0})
+                    Items["SettingsIcon"]:Tween(nil, {ImageTransparency = 0})
                 end)
 
                 Items["Settings"]:OnHoverLeave(function()
-                    Items["SettingsIcon"]:Tween(nil, {TextTransparency = 0.6})
+                    Items["SettingsIcon"]:Tween(nil, {ImageTransparency = 0.6})
                 end)
 
                 Items["Search"]:OnHover(function()
-                    Items["SearchIcon"]:Tween(nil, {TextTransparency = 0})
+                    Items["SearchIcon"]:Tween(nil, {ImageTransparency = 0})
                 end)
 
                 Items["Search"]:OnHoverLeave(function()
-                    Items["SearchIcon"]:Tween(nil, {TextTransparency = 0.6})
+                    Items["SearchIcon"]:Tween(nil, {ImageTransparency = 0.6})
                 end)
 
                 Items["Input"] = Instances:Create("TextBox", {
@@ -2886,33 +2876,35 @@ local Library do
                     ApplyStrokeMode = Enum.ApplyStrokeMode.Border
                 }):AddToTheme({Color = "Outline"})
                 
-                Items["Icon"] = Instances:Create("TextLabel", {
+                local pageIconStr = tostring(Page.Icon or "7743868936")
+                if not pageIconStr:find("rbxassetid://") and not pageIconStr:find("http") then
+                    pageIconStr = "rbxassetid://" .. pageIconStr
+                end
+                Items["Icon"] = Instances:Create("ImageLabel", {
                     Parent = Items["Inactive"].Instance,
                     Name = "\0",
-                    TextTransparency = 0.6,
+                    ImageTransparency = 0.6,
+                    BorderColor3 = FromRGB(0, 0, 0),
                     AnchorPoint = Vector2New(0.5, 0.5),
-                    Text = tostring(Page.Icon or "⭐"),
-                    RichText = true,
-                    TextColor3 = FromRGB(200, 204, 216),
-                    TextSize = 15,
-                    FontFace = Library.Font,
+                    Image = pageIconStr,
+                    ImageColor3 = FromRGB(215, 222, 238),
                     BackgroundTransparency = 1,
                     Position = UDim2New(0.5, 0, 0.5, 0),
-                    Size = UDim2New(1, 0, 1, 0),
+                    Size = UDim2New(0, 16, 0, 16),
                     ZIndex = 2,
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 })
-                Items["Icon"]:AddToTheme({TextColor3 = "Text"})     
+                Items["Icon"]:AddToTheme({ImageColor3 = "Text"})     
                 
                 Items["Inactive"]:OnHover(function()
                     if Page.Active then return end
-                    Items["Icon"]:Tween(nil, {TextTransparency = 0})
+                    Items["Icon"]:Tween(nil, {ImageTransparency = 0})
                 end)
 
                 Items["Inactive"]:OnHoverLeave(function()
                     if Page.Active then return end
-                    Items["Icon"]:Tween(nil, {TextTransparency = 0.6})
+                    Items["Icon"]:Tween(nil, {ImageTransparency = 0.6})
                 end)
 
                 Items["Page"] = Instances:Create("Frame", {
@@ -3125,9 +3117,9 @@ local Library do
                 Items["Page"].Instance.Parent = Bool and Page.Window.Items["Content"].Instance or Library.UnusedHolder.Instance
 
                 if Page.Active then
-                    Items["Icon"]:ChangeItemTheme({TextColor3 = function() return FromRGB(14, 16, 20) end})
+                    Items["Icon"]:ChangeItemTheme({ImageColor3 = function() return FromRGB(14, 16, 20) end})
                     Items["Accent"]:Tween(TweenInfo.new(0.16, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2New(1, 0, 1, 0), BackgroundTransparency = 0})
-                    Items["Icon"]:Tween(nil, {TextColor3 = FromRGB(14, 16, 20), TextTransparency = 0})
+                    Items["Icon"]:Tween(nil, {ImageColor3 = FromRGB(14, 16, 20), ImageTransparency = 0})
                     Items["Page"]:Tween(TweenInfo.new(0.16, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2New(0, 0, 0, 0)})
                     if Items["Gradient"] and Items["Gradient"].Instance then
                         Items["Gradient"].Instance.Enabled = true
@@ -3271,22 +3263,22 @@ local Library do
                     CornerRadius = UDimNew(0, 6)
                 })
                 
-                Items["Icon"] = Instances:Create("TextLabel", {
+                local secIconStr = tostring(Section.Icon or "7733798747")
+                if not secIconStr:find("rbxassetid://") and not secIconStr:find("http") then
+                    secIconStr = "rbxassetid://" .. secIconStr
+                end
+                Items["Icon"] = Instances:Create("ImageLabel", {
                     Parent = Items["IconBackground"].Instance,
-                    Name = " ",
-                    TextColor3 = FromRGB(138, 164, 255),
+                    Name = "SectionIconImg",
+                    ImageColor3 = Library.Theme["Accent"] or FromRGB(138, 164, 255),
                     AnchorPoint = Vector2New(0.5, 0.5),
-                    Text = tostring(Section.Icon or "⭐"),
-                    RichText = true,
-                    TextSize = 14,
-                    FontFace = Library.Font,
-                    BackgroundTransparency = 1,
                     Position = UDim2New(0.5, 0, 0.5, 0),
-                    Size = UDim2New(1, 0, 1, 0),
-                    BorderSizePixel = 0,
-                    BackgroundColor3 = FromRGB(255, 255, 255)
+                    Size = UDim2New(0, 14, 0, 14),
+                    Image = secIconStr,
+                    BackgroundTransparency = 1,
+                    BorderSizePixel = 0
                 })
-                Items["Icon"]:AddToTheme({TextColor3 = "Accent"})
+                Items["Icon"]:AddToTheme({ImageColor3 = "Accent"})
                 
                 Items["Text"] = Instances:Create("TextLabel", {
                     Parent = Items["Section"].Instance,
@@ -3390,16 +3382,17 @@ local Library do
                         Thickness = 1,
                         ApplyStrokeMode = Enum.ApplyStrokeMode.Border
                     })
-                    Items["IconImg"] = Instances:Create("TextLabel", {
+                    local togIconStr = tostring(Toggle.Icon or "7733765307")
+                    if not togIconStr:find("rbxassetid://") and not togIconStr:find("http") then
+                        togIconStr = "rbxassetid://" .. togIconStr
+                    end
+                    Items["IconImg"] = Instances:Create("ImageLabel", {
                         Parent = Items["IconBadge"].Instance,
                         AnchorPoint = Vector2New(0.5, 0.5),
                         Position = UDim2New(0.5, 0, 0.5, 0),
-                        Size = UDim2New(1, 0, 1, 0),
-                        Text = tostring(Toggle.Icon or "⭐"),
-                        RichText = true,
-                        TextColor3 = FromRGB(145, 152, 170),
-                        TextSize = 14,
-                        FontFace = Library.Font,
+                        Size = UDim2New(0, 13, 0, 13),
+                        Image = togIconStr,
+                        ImageColor3 = FromRGB(145, 152, 170),
                         BackgroundTransparency = 1,
                         BorderSizePixel = 0
                     })
@@ -4751,27 +4744,24 @@ local Library do
                 Thickness = 1,
                 ApplyStrokeMode = Enum.ApplyStrokeMode.Border
             })
-            local RefIcon = Instances:Create("TextLabel", {
+            local RefIcon = Instances:Create("ImageLabel", {
                 Parent = RefreshBtn.Instance,
                 AnchorPoint = Vector2New(0, 0.5),
-                Position = UDim2New(0, 5, 0.5, 0),
-                Size = UDim2New(0, 14, 0, 14),
-                Text = "🔄",
-                RichText = true,
-                TextColor3 = FromRGB(215, 222, 238),
-                TextSize = 12,
-                FontFace = Library.Font,
+                Position = UDim2New(0, 8, 0.5, 0),
+                Size = UDim2New(0, 12, 0, 12),
+                Image = "rbxassetid://7734051052",
+                ImageColor3 = FromRGB(215, 222, 238),
                 BackgroundTransparency = 1,
                 BorderSizePixel = 0
             })
 
-            -- Status rows definition
+            -- Status rows definition (Verified Lucide icons)
             local rowsDef = {
-                { id = "Application", name = "Application", icon = "💻", defaultDot = Color3.fromRGB(34, 197, 94), defaultText = "Running", textColor = Color3.fromRGB(34, 197, 94) },
-                { id = "Auto Farm",   name = "Auto Farm",   icon = "🎯", defaultDot = Color3.fromRGB(130, 138, 155), defaultText = "Disabled", textColor = Color3.fromRGB(140, 146, 162) },
-                { id = "FPS Boost",   name = "FPS Boost",   icon = "🚀", defaultDot = Color3.fromRGB(130, 138, 155), defaultText = "Disabled", textColor = Color3.fromRGB(140, 146, 162) },
-                { id = "Hide Name",   name = "Hide Name",   icon = "🛡️", defaultDot = Color3.fromRGB(130, 138, 155), defaultText = "Disabled", textColor = Color3.fromRGB(140, 146, 162) },
-                { id = "Session Time",name = "Session Time",icon = "⏱️", defaultDot = nil, defaultText = "00:00:00", textColor = Color3.fromRGB(240, 243, 252) },
+                { id = "Application", name = "Application", icon = "7734002839", defaultDot = Color3.fromRGB(34, 197, 94), defaultText = "Running", textColor = Color3.fromRGB(34, 197, 94) },
+                { id = "Auto Farm",   name = "Auto Farm",   icon = "7733798747", defaultDot = Color3.fromRGB(130, 138, 155), defaultText = "Disabled", textColor = Color3.fromRGB(140, 146, 162) },
+                { id = "FPS Boost",   name = "FPS Boost",   icon = "7733799969", defaultDot = Color3.fromRGB(130, 138, 155), defaultText = "Disabled", textColor = Color3.fromRGB(140, 146, 162) },
+                { id = "Hide Name",   name = "Hide Name",   icon = "7733774495", defaultDot = Color3.fromRGB(130, 138, 155), defaultText = "Disabled", textColor = Color3.fromRGB(140, 146, 162) },
+                { id = "Session Time",name = "Session Time",icon = "7733734848", defaultDot = nil, defaultText = "00:00:00", textColor = Color3.fromRGB(240, 243, 252) },
             }
 
             local rowElements = {}
@@ -4785,16 +4775,17 @@ local Library do
                     BorderSizePixel = 0
                 })
 
-                local iconImg = Instances:Create("TextLabel", {
+                local rowIconStr = tostring(r.icon)
+                if not rowIconStr:find("rbxassetid://") and not rowIconStr:find("http") then
+                    rowIconStr = "rbxassetid://" .. rowIconStr
+                end
+                local iconImg = Instances:Create("ImageLabel", {
                     Parent = rowFrame.Instance,
                     AnchorPoint = Vector2New(0, 0.5),
                     Position = UDim2New(0, 0, 0.5, 0),
-                    Size = UDim2New(0, 18, 0, 18),
-                    Text = tostring(r.icon),
-                    RichText = true,
-                    TextColor3 = Library.Theme["Accent"] or FromRGB(129, 140, 248),
-                    TextSize = 13,
-                    FontFace = Library.Font,
+                    Size = UDim2New(0, 14, 0, 14),
+                    Image = rowIconStr,
+                    ImageColor3 = Library.Theme["Accent"] or FromRGB(129, 140, 248),
                     BackgroundTransparency = 1,
                     BorderSizePixel = 0
                 })
@@ -4903,7 +4894,7 @@ local Library do
             end
 
             RefreshBtn:Connect("MouseButton1Click", function()
-                RefIcon:Tween(TweenInfo.new(0.15), {TextTransparency = 0.5}); task.delay(0.15, function() RefIcon:Tween(TweenInfo.new(0.15), {TextTransparency = 0}) end)
+                RefIcon:Tween(TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = RefIcon.Instance.Rotation + 360})
                 if Config.OnRefresh then
                     Library:SafeCall(Config.OnRefresh)
                 end
