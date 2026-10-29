@@ -2715,12 +2715,18 @@ local Library do
                     Items["Accent"]:Tween(TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2New(1, 0, 1, 0), BackgroundTransparency = 0})
                     Items["Icon"]:Tween(nil, {ImageColor3 = FromRGB(16, 18, 22), ImageTransparency = 0})
                     Items["Page"]:Tween(TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2New(0, 0, 0, 0)})
+                    if Items["Gradient"] and Items["Gradient"].Instance then
+                        Items["Gradient"].Instance.Enabled = true
+                    end
                     Library.CurrentPage = Page
                 else
                     Items["Icon"]:ChangeItemTheme({ImageColor3 = "Text"})
                     Items["Accent"]:Tween(TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2New(0, 0, 0, 0), BackgroundTransparency = 1})
                     Items["Icon"]:Tween(nil, {ImageColor3 = Library.Theme.Text, ImageTransparency = 0.6})
                     Items["Page"]:Tween(TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2New(0, 0, 0, 67)})
+                    if Items["Gradient"] and Items["Gradient"].Instance then
+                        Items["Gradient"].Instance.Enabled = false
+                    end
                 end
 
                 local AllInstances = Items["Page"].Instance:GetDescendants()
