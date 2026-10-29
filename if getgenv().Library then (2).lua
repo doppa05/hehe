@@ -725,8 +725,12 @@ local Library do
         getgenv().Library = nil
     end
 
-    Library.GetImage = function(self, Image)
-        local ImageData = self.Images and self.Images[Image]
+   Library.GetImage = function(self, Image)
+        if not self.Images then 
+            return 
+        end
+        
+        local ImageData = self.Images[Image]
 
         if not ImageData or typeof(getcustomasset) ~= "function" then 
             return
@@ -4652,11 +4656,8 @@ Library.Thread = function(self, Function)
                     Library.Tween.Time = Value
                 end
             })
-                })
-            end
         end
     end
-end
 
 getgenv().Library = Library
 return Library
