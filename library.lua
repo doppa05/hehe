@@ -229,13 +229,13 @@ local Library do
 
     local Themes = {
         ["Preset"] = {
-            ["Background"] = FromRGB(14, 16, 20),
-            ["Inline"] = FromRGB(18, 20, 25),
-            ["Outline"] = FromRGB(38, 42, 48),
-            ["Text"] = FromRGB(238, 239, 242),
-            ["Dark Text"] = FromRGB(154, 158, 166),
-            ["Element"] = FromRGB(24, 27, 32),
-            ["Accent"] = FromRGB(138, 164, 255)
+            ["Background"] = FromRGB(10, 12, 16),
+            ["Inline"] = FromRGB(16, 19, 26),
+            ["Outline"] = FromRGB(34, 40, 54),
+            ["Text"] = FromRGB(240, 243, 248),
+            ["Dark Text"] = FromRGB(145, 152, 168),
+            ["Element"] = FromRGB(24, 28, 38),
+            ["Accent"] = FromRGB(99, 102, 241)
         }
     }
 
@@ -1782,7 +1782,7 @@ local Library do
                     AnchorPoint = Vector2New(0.5, 0.5),
                     Position = UDim2New(0.5, 0, 0.5, 0),
                     BorderColor3 = FromRGB(0, 0, 0),
-                    Size = UDim2New(0, 680, 0, 530),
+                    Size = Data.Size or UDim2New(0, 840, 0, 370),
                     BorderSizePixel = 0,
                     BackgroundColor3 = FromRGB(14, 16, 20)
                 })  
@@ -1971,99 +1971,224 @@ local Library do
                     BackgroundColor3 = FromRGB(38, 42, 48)
                 }):AddToTheme({BackgroundColor3 = "Outline"})
 
+                -- Brand Header Left: Logo Icon + COVEN STORE Title
+                Items["TopBrandIcon"] = Instances:Create("ImageLabel", {
+                    Parent = Items["Top"].Instance,
+                    Name = "BrandLogo",
+                    AnchorPoint = Vector2New(0, 0.5),
+                    Position = UDim2New(0, 14, 0.5, 0),
+                    Size = UDim2New(0, 32, 0, 32),
+                    Image = "rbxassetid://131145598162617",
+                    BackgroundTransparency = 1,
+                    BorderSizePixel = 0
+                })
+                task.spawn(function()
+                    if typeof(isfile) == "function" and typeof(getcustomasset) == "function" then
+                        if isfile("coven_store_v2.png") then
+                            Items["TopBrandIcon"].Instance.Image = getcustomasset("coven_store_v2.png")
+                        elseif isfile("coven_store.png") then
+                            Items["TopBrandIcon"].Instance.Image = getcustomasset("coven_store.png")
+                        end
+                    end
+                end)
+
+                Items["TopBrandTitle"] = Instances:Create("TextLabel", {
+                    Parent = Items["Top"].Instance,
+                    Name = "BrandTitle",
+                    FontFace = Library.Font,
+                    Text = '<font color="rgb(255,255,255)"><b>COVEN</b></font> <font color="rgb(129,140,248)"><b>STORE</b></font>',
+                    RichText = true,
+                    TextSize = 16,
+                    AnchorPoint = Vector2New(0, 0.5),
+                    Position = UDim2New(0, 52, 0.5, 0),
+                    Size = UDim2New(0, 140, 0, 24),
+                    BackgroundTransparency = 1,
+                    BorderSizePixel = 0,
+                    TextXAlignment = Enum.TextXAlignment.Left
+                })
+
+                -- Top Right Container: User Profile + Lightning + Settings + Minimize + Close
                 local Content = Players:GetUserThumbnailAsync(LocalPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
                 
-                Items["AvatarIcon"] = Instances:Create("ImageLabel", {
+                Items["TopRight"] = Instances:Create("Frame", {
                     Parent = Items["Top"].Instance,
-                    Name = "\0",
-                    BorderColor3 = FromRGB(0, 0, 0),
-                    AnchorPoint = Vector2New(0, 0.5),
+                    Name = "TopRightControls",
+                    AnchorPoint = Vector2New(1, 0.5),
+                    Position = UDim2New(1, -12, 0.5, 0),
+                    Size = UDim2New(0, 0, 0, 34),
+                    AutomaticSize = Enum.AutomaticSize.X,
+                    BackgroundTransparency = 1,
+                    BorderSizePixel = 0
+                })
+                Instances:Create("UIListLayout", {
+                    Parent = Items["TopRight"].Instance,
+                    FillDirection = Enum.FillDirection.Horizontal,
+                    VerticalAlignment = Enum.VerticalAlignment.Center,
+                    HorizontalAlignment = Enum.HorizontalAlignment.Right,
+                    Padding = UDimNew(0, 8),
+                    SortOrder = Enum.SortOrder.LayoutOrder
+                })
+
+                -- User Profile Box
+                Items["UserProfileFrame"] = Instances:Create("Frame", {
+                    Parent = Items["TopRight"].Instance,
+                    Name = "UserProfile",
+                    Size = UDim2New(0, 0, 0, 32),
+                    AutomaticSize = Enum.AutomaticSize.X,
+                    BackgroundTransparency = 1,
+                    BorderSizePixel = 0
+                })
+                Instances:Create("UIListLayout", {
+                    Parent = Items["UserProfileFrame"].Instance,
+                    FillDirection = Enum.FillDirection.Horizontal,
+                    VerticalAlignment = Enum.VerticalAlignment.Center,
+                    Padding = UDimNew(0, 8)
+                })
+
+                Items["AvatarIcon"] = Instances:Create("ImageLabel", {
+                    Parent = Items["UserProfileFrame"].Instance,
+                    Name = "Avatar",
                     Image = Content,
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, 16, 0.5, 0),
-                    Size = UDim2New(0, 30, 0, 30),
-                    BorderSizePixel = 0,
-                    BackgroundColor3 = FromRGB(255, 255, 255)
+                    Size = UDim2New(0, 28, 0, 28),
+                    BorderSizePixel = 0
                 })
-                
                 Instances:Create("UICorner", {
                     Parent = Items["AvatarIcon"].Instance,
-                    Name = "\0",
                     CornerRadius = UDimNew(1, 0)
                 })
-                
                 Instances:Create("UIStroke", {
                     Parent = Items["AvatarIcon"].Instance,
-                    Name = "\0",
-                    Color = FromRGB(38, 42, 48),
+                    Color = FromRGB(38, 44, 58),
+                    Thickness = 1,
                     ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-                }):AddToTheme({Color = "Outline"})
-                
+                })
+
+                local userTextHolder = Instances:Create("Frame", {
+                    Parent = Items["UserProfileFrame"].Instance,
+                    Size = UDim2New(0, 0, 0, 28),
+                    AutomaticSize = Enum.AutomaticSize.X,
+                    BackgroundTransparency = 1,
+                    BorderSizePixel = 0
+                })
+
                 Items["Username"] = Instances:Create("TextLabel", {
-                    Parent = Items["Top"].Instance,
-                    Name = "\0",
+                    Parent = userTextHolder.Instance,
                     FontFace = Library.Font,
-                    TextColor3 = FromRGB(238, 239, 242),
-                    BorderColor3 = FromRGB(0, 0, 0),
+                    TextColor3 = FromRGB(240, 243, 250),
                     Text = LocalPlayer.Name,
-                    Size = UDim2New(0, 0, 0, 16),
-                    BackgroundTransparency = 1,
-                    Position = UDim2New(0, 54, 0, 9),
-                    BorderSizePixel = 0,
+                    Size = UDim2New(0, 0, 0, 14),
                     AutomaticSize = Enum.AutomaticSize.X,
-                    TextSize = 14,
-                    BackgroundColor3 = FromRGB(255, 255, 255)
-                })  
-                Items["Username"]:AddToTheme({TextColor3 = "Text"})
-                
+                    TextSize = 13,
+                    TextXAlignment = Enum.TextXAlignment.Left,
+                    BackgroundTransparency = 1,
+                    BorderSizePixel = 0
+                })
+
                 Items["TimeRemaining"] = Instances:Create("TextLabel", {
-                    Parent = Items["Top"].Instance,
-                    Name = "\0",
+                    Parent = userTextHolder.Instance,
                     FontFace = Library.Font,
-                    TextColor3 = FromRGB(238, 239, 242),
-                    TextTransparency = 0.62,
-                    Text = "Time remaining: "..Window.TimeRemaining,
-                    Size = UDim2New(0, 0, 0, 15),
-                    BorderColor3 = FromRGB(0, 0, 0),
-                    BorderSizePixel = 0,
-                    BackgroundTransparency = 1,
-                    Position = UDim2New(0, 54, 0, 26),
-                    TextWrapped = true,
+                    TextColor3 = FromRGB(140, 146, 162),
+                    Text = "Time running: 00:00",
+                    Position = UDim2New(0, 0, 0, 14),
+                    Size = UDim2New(0, 0, 0, 13),
                     AutomaticSize = Enum.AutomaticSize.X,
-                    TextSize = 12,
-                    BackgroundColor3 = FromRGB(255, 255, 255)
-                })  
-                Items["TimeRemaining"]:AddToTheme({TextColor3 = "Text"})
-                
+                    TextSize = 11,
+                    TextXAlignment = Enum.TextXAlignment.Left,
+                    BackgroundTransparency = 1,
+                    BorderSizePixel = 0
+                })
+
+                -- Lightning Action Button (Electric Indigo Pill)
+                Items["LightningBtn"] = Instances:Create("TextButton", {
+                    Parent = Items["TopRight"].Instance,
+                    Name = "LightningAction",
+                    Size = UDim2New(0, 30, 0, 30),
+                    BackgroundColor3 = Library.Theme["Accent"] or FromRGB(99, 102, 241),
+                    Text = "",
+                    BorderSizePixel = 0,
+                    AutoButtonColor = false
+                })
+                Instances:Create("UICorner", { Parent = Items["LightningBtn"].Instance, CornerRadius = UDimNew(0, 8) })
+                local ZapIcon = Instances:Create("ImageLabel", {
+                    Parent = Items["LightningBtn"].Instance,
+                    AnchorPoint = Vector2New(0.5, 0.5),
+                    Position = UDim2New(0.5, 0, 0.5, 0),
+                    Size = UDim2New(0, 15, 0, 15),
+                    Image = "rbxassetid://10709791598",
+                    ImageColor3 = FromRGB(255, 255, 255),
+                    BackgroundTransparency = 1,
+                    BorderSizePixel = 0
+                })
+                Items["LightningBtn"]:Connect("MouseButton1Click", function()
+                    ZapIcon:Tween(TweenInfo.new(0.15), {Size = UDim2New(0, 18, 0, 18)})
+                    task.wait(0.15)
+                    ZapIcon:Tween(TweenInfo.new(0.15), {Size = UDim2New(0, 15, 0, 15)})
+                end)
+
+                -- Settings Button
+                Items["SettingsBtn"] = Instances:Create("TextButton", {
+                    Parent = Items["TopRight"].Instance,
+                    Name = "SettingsBtn",
+                    Size = UDim2New(0, 30, 0, 30),
+                    BackgroundColor3 = FromRGB(22, 26, 36),
+                    Text = "",
+                    BorderSizePixel = 0,
+                    AutoButtonColor = false
+                })
+                Instances:Create("UICorner", { Parent = Items["SettingsBtn"].Instance, CornerRadius = UDimNew(0, 8) })
+                Instances:Create("UIStroke", { Parent = Items["SettingsBtn"].Instance, Color = FromRGB(38, 44, 58), Thickness = 1 })
+                local GearIcon = Instances:Create("ImageLabel", {
+                    Parent = Items["SettingsBtn"].Instance,
+                    AnchorPoint = Vector2New(0.5, 0.5),
+                    Position = UDim2New(0.5, 0, 0.5, 0),
+                    Size = UDim2New(0, 15, 0, 15),
+                    Image = "rbxassetid://10709791281",
+                    ImageColor3 = FromRGB(180, 186, 202),
+                    BackgroundTransparency = 1,
+                    BorderSizePixel = 0
+                })
+
+                -- Minimize Button
+                Items["MinimizeBtn"] = Instances:Create("TextButton", {
+                    Parent = Items["TopRight"].Instance,
+                    Name = "MinimizeBtn",
+                    Size = UDim2New(0, 26, 0, 26),
+                    BackgroundTransparency = 1,
+                    Text = "-",
+                    TextColor3 = FromRGB(180, 186, 202),
+                    TextSize = 18,
+                    FontFace = Library.Font,
+                    BorderSizePixel = 0,
+                    AutoButtonColor = false
+                })
+                Items["MinimizeBtn"]:Connect("MouseButton1Click", function()
+                    Window:SetOpen(false)
+                end)
+
+                -- Close Button
+                Items["CloseBtn"] = Instances:Create("TextButton", {
+                    Parent = Items["TopRight"].Instance,
+                    Name = "CloseBtn",
+                    Size = UDim2New(0, 26, 0, 26),
+                    BackgroundTransparency = 1,
+                    Text = "✕",
+                    TextColor3 = FromRGB(180, 186, 202),
+                    TextSize = 14,
+                    FontFace = Library.Font,
+                    BorderSizePixel = 0,
+                    AutoButtonColor = false
+                })
+                Items["CloseBtn"]:Connect("MouseButton1Click", function()
+                    Window:SetOpen(false)
+                end)
+
+                -- Hidden Pages container for multi-page scripts
                 Items["Pages"] = Instances:Create("Frame", {
                     Parent = Items["Top"].Instance,
                     Name = "\0",
-                    BorderColor3 = FromRGB(0, 0, 0),
-                    AnchorPoint = Vector2New(1, 0),
-                    BackgroundTransparency = 1,
-                    Position = UDim2New(1, 0, 0, 0),
-                    Size = UDim2New(0, 0, 1, 0),
-                    BorderSizePixel = 0,
-                    AutomaticSize = Enum.AutomaticSize.X,
-                    BackgroundColor3 = FromRGB(255, 255, 255)
-                })
-                
-                Instances:Create("UIPadding", {
-                    Parent = Items["Pages"].Instance,
-                    Name = "\0",
-                    PaddingTop = UDimNew(0, 9),
-                    PaddingBottom = UDimNew(0, 9),
-                    PaddingRight = UDimNew(0, 14),
-                    PaddingLeft = UDimNew(0, 12)
-                })                
-
-                Instances:Create("UIListLayout", {
-                    Parent = Items["Pages"].Instance,
-                    Name = "\0",
-                    VerticalAlignment = Enum.VerticalAlignment.Center,
-                    FillDirection = Enum.FillDirection.Horizontal,
-                    Padding = UDimNew(0, 6),
-                    SortOrder = Enum.SortOrder.LayoutOrder
+                    Visible = false,
+                    Size = UDim2New(0, 0, 0, 0)
                 })
 
                 Items["Bottom"] = Instances:Create("Frame", {
@@ -2102,19 +2227,42 @@ local Library do
                     BackgroundColor3 = FromRGB(38, 42, 48)
                 }):AddToTheme({BackgroundColor3 = "Outline"})
                 
+                -- Document Badge
+                Items["BottomDocBadge"] = Instances:Create("Frame", {
+                    Parent = Items["Bottom"].Instance,
+                    Name = "DocBadge",
+                    AnchorPoint = Vector2New(0, 0.5),
+                    Position = UDim2New(0, 14, 0.5, 0),
+                    Size = UDim2New(0, 26, 0, 26),
+                    BackgroundColor3 = FromRGB(22, 26, 36),
+                    BorderSizePixel = 0
+                })
+                Instances:Create("UICorner", { Parent = Items["BottomDocBadge"].Instance, CornerRadius = UDimNew(0, 6) })
+                Instances:Create("UIStroke", { Parent = Items["BottomDocBadge"].Instance, Color = FromRGB(38, 44, 58), Thickness = 1 })
+                local BottomDocImg = Instances:Create("ImageLabel", {
+                    Parent = Items["BottomDocBadge"].Instance,
+                    AnchorPoint = Vector2New(0.5, 0.5),
+                    Position = UDim2New(0.5, 0, 0.5, 0),
+                    Size = UDim2New(0, 14, 0, 14),
+                    Image = "rbxassetid://10709790448",
+                    ImageColor3 = Library.Theme["Accent"] or FromRGB(129, 140, 248),
+                    BackgroundTransparency = 1,
+                    BorderSizePixel = 0
+                })
+
                 Items["Title"] = Instances:Create("TextLabel", {
                     Parent = Items["Bottom"].Instance,
                     Name = "\0",
                     FontFace = Library.Font,
-                    TextColor3 = FromRGB(238, 239, 242),
+                    TextColor3 = FromRGB(240, 243, 250),
                     BorderColor3 = FromRGB(0, 0, 0),
                     Text = Window.Name,
                     Size = UDim2New(0, 0, 0, 16),
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, 18, 0, 9),
+                    Position = UDim2New(0, 48, 0, 9),
                     BorderSizePixel = 0,
                     AutomaticSize = Enum.AutomaticSize.X,
-                    TextSize = 14,
+                    TextSize = 13,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 })  
                 Items["Title"]:AddToTheme({TextColor3 = "Text"})
@@ -2123,17 +2271,17 @@ local Library do
                     Parent = Items["Bottom"].Instance,
                     Name = "\0",
                     FontFace = Library.Font,
-                    TextColor3 = FromRGB(238, 239, 242),
+                    TextColor3 = FromRGB(140, 146, 162),
                     TextTransparency = 0.62,
                     Text = Window.SubTitle,
                     Size = UDim2New(0, 0, 0, 15),
                     BorderColor3 = FromRGB(0, 0, 0),
                     BorderSizePixel = 0,
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, 18, 0, 26),
+                    Position = UDim2New(0, 48, 0, 26),
                     TextWrapped = true,
                     AutomaticSize = Enum.AutomaticSize.X,
-                    TextSize = 12,
+                    TextSize = 11,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 })  
                 Items["GameName"]:AddToTheme({TextColor3 = "Text"})
@@ -2774,65 +2922,161 @@ local Library do
                     VerticalFlex = Enum.UIFlexAlignment.Fill
                 })                
 
-                Items["LeftColumn"] = Instances:Create("ScrollingFrame", {
-                    Parent = Items["Page"].Instance,
-                    Name = "\0",
-                    ScrollBarImageColor3 = FromRGB(0, 0, 0),
-                    Active = true,
-                    AutomaticCanvasSize = Enum.AutomaticSize.Y,
-                    ScrollBarThickness = 0,
-                    BackgroundTransparency = 1,
-                    Size = UDim2New(0, 100, 0, 100),
-                    BackgroundColor3 = FromRGB(255, 255, 255),
-                    BorderColor3 = FromRGB(0, 0, 0),
-                    BorderSizePixel = 0,
-                    CanvasSize = UDim2New(0, 0, 0, 0)
-                })
-                
-                Instances:Create("UIPadding", {
-                    Parent = Items["LeftColumn"].Instance,
-                    Name = "\0",
-                    PaddingTop = UDimNew(0, 18),
-                    PaddingBottom = UDimNew(0, 18),
-                    PaddingRight = UDimNew(0, 8),
-                    PaddingLeft = UDimNew(0, 18)
-                })
-                
-                Instances:Create("UIListLayout", {
-                    Parent = Items["LeftColumn"].Instance,
-                    Padding = UDimNew(0, 12),
-                    SortOrder = Enum.SortOrder.LayoutOrder
-                })        
-                
-                Items["RightColumn"] = Instances:Create("ScrollingFrame", {
-                    Parent = Items["Page"].Instance,
-                    Name = "\0",
-                    ScrollBarImageColor3 = FromRGB(0, 0, 0),
-                    Active = true,
-                    AutomaticCanvasSize = Enum.AutomaticSize.Y,
-                    ScrollBarThickness = 0,
-                    BackgroundTransparency = 1,
-                    Size = UDim2New(0, 100, 0, 100),
-                    BackgroundColor3 = FromRGB(255, 255, 255),
-                    BorderColor3 = FromRGB(0, 0, 0),
-                    BorderSizePixel = 0,
-                    CanvasSize = UDim2New(0, 0, 0, 0)
-                })
-                
-                Instances:Create("UIPadding", {
-                    Parent = Items["RightColumn"].Instance,
-                    Name = "\0",
-                    PaddingTop = UDimNew(0, 18),
-                    PaddingBottom = UDimNew(0, 18),
-                    PaddingRight = UDimNew(0, 18),
-                    PaddingLeft = UDimNew(0, 8)
-                })
-                
-                Instances:Create("UIListLayout", {
-                    Parent = Items["RightColumn"].Instance,
-                    Padding = UDimNew(0, 12),
-                    SortOrder = Enum.SortOrder.LayoutOrder
-                })        
+                local colCount = tonumber(Page.Columns) or 2
+
+                if colCount == 3 then
+                    -- 3 Columns Grid for widescreen layout
+                    Items["LeftColumn"] = Instances:Create("ScrollingFrame", {
+                        Parent = Items["Page"].Instance,
+                        Name = "LeftColumn",
+                        ScrollBarImageColor3 = FromRGB(0, 0, 0),
+                        Active = true,
+                        AutomaticCanvasSize = Enum.AutomaticSize.Y,
+                        ScrollBarThickness = 0,
+                        BackgroundTransparency = 1,
+                        Size = UDim2New(0, 100, 0, 100),
+                        BackgroundColor3 = FromRGB(255, 255, 255),
+                        BorderColor3 = FromRGB(0, 0, 0),
+                        BorderSizePixel = 0,
+                        CanvasSize = UDim2New(0, 0, 0, 0)
+                    })
+                    Instances:Create("UIPadding", {
+                        Parent = Items["LeftColumn"].Instance,
+                        Name = "\0",
+                        PaddingTop = UDimNew(0, 14),
+                        PaddingBottom = UDimNew(0, 14),
+                        PaddingRight = UDimNew(0, 6),
+                        PaddingLeft = UDimNew(0, 14)
+                    })
+                    Instances:Create("UIListLayout", {
+                        Parent = Items["LeftColumn"].Instance,
+                        Padding = UDimNew(0, 10),
+                        SortOrder = Enum.SortOrder.LayoutOrder
+                    })
+
+                    Items["CenterColumn"] = Instances:Create("ScrollingFrame", {
+                        Parent = Items["Page"].Instance,
+                        Name = "CenterColumn",
+                        ScrollBarImageColor3 = FromRGB(0, 0, 0),
+                        Active = true,
+                        AutomaticCanvasSize = Enum.AutomaticSize.Y,
+                        ScrollBarThickness = 0,
+                        BackgroundTransparency = 1,
+                        Size = UDim2New(0, 100, 0, 100),
+                        BackgroundColor3 = FromRGB(255, 255, 255),
+                        BorderColor3 = FromRGB(0, 0, 0),
+                        BorderSizePixel = 0,
+                        CanvasSize = UDim2New(0, 0, 0, 0)
+                    })
+                    Instances:Create("UIPadding", {
+                        Parent = Items["CenterColumn"].Instance,
+                        Name = "\0",
+                        PaddingTop = UDimNew(0, 14),
+                        PaddingBottom = UDimNew(0, 14),
+                        PaddingRight = UDimNew(0, 6),
+                        PaddingLeft = UDimNew(0, 6)
+                    })
+                    Instances:Create("UIListLayout", {
+                        Parent = Items["CenterColumn"].Instance,
+                        Padding = UDimNew(0, 10),
+                        SortOrder = Enum.SortOrder.LayoutOrder
+                    })
+
+                    Items["RightColumn"] = Instances:Create("ScrollingFrame", {
+                        Parent = Items["Page"].Instance,
+                        Name = "RightColumn",
+                        ScrollBarImageColor3 = FromRGB(0, 0, 0),
+                        Active = true,
+                        AutomaticCanvasSize = Enum.AutomaticSize.Y,
+                        ScrollBarThickness = 0,
+                        BackgroundTransparency = 1,
+                        Size = UDim2New(0, 100, 0, 100),
+                        BackgroundColor3 = FromRGB(255, 255, 255),
+                        BorderColor3 = FromRGB(0, 0, 0),
+                        BorderSizePixel = 0,
+                        CanvasSize = UDim2New(0, 0, 0, 0)
+                    })
+                    Instances:Create("UIPadding", {
+                        Parent = Items["RightColumn"].Instance,
+                        Name = "\0",
+                        PaddingTop = UDimNew(0, 14),
+                        PaddingBottom = UDimNew(0, 14),
+                        PaddingRight = UDimNew(0, 14),
+                        PaddingLeft = UDimNew(0, 6)
+                    })
+                    Instances:Create("UIListLayout", {
+                        Parent = Items["RightColumn"].Instance,
+                        Padding = UDimNew(0, 10),
+                        SortOrder = Enum.SortOrder.LayoutOrder
+                    })
+
+                    Page.ColumnsData[1] = Items["LeftColumn"]
+                    Page.ColumnsData[2] = Items["CenterColumn"]
+                    Page.ColumnsData[3] = Items["RightColumn"]
+                else
+                    Items["LeftColumn"] = Instances:Create("ScrollingFrame", {
+                        Parent = Items["Page"].Instance,
+                        Name = "\0",
+                        ScrollBarImageColor3 = FromRGB(0, 0, 0),
+                        Active = true,
+                        AutomaticCanvasSize = Enum.AutomaticSize.Y,
+                        ScrollBarThickness = 0,
+                        BackgroundTransparency = 1,
+                        Size = UDim2New(0, 100, 0, 100),
+                        BackgroundColor3 = FromRGB(255, 255, 255),
+                        BorderColor3 = FromRGB(0, 0, 0),
+                        BorderSizePixel = 0,
+                        CanvasSize = UDim2New(0, 0, 0, 0)
+                    })
+                    
+                    Instances:Create("UIPadding", {
+                        Parent = Items["LeftColumn"].Instance,
+                        Name = "\0",
+                        PaddingTop = UDimNew(0, 18),
+                        PaddingBottom = UDimNew(0, 18),
+                        PaddingRight = UDimNew(0, 8),
+                        PaddingLeft = UDimNew(0, 18)
+                    })
+                    
+                    Instances:Create("UIListLayout", {
+                        Parent = Items["LeftColumn"].Instance,
+                        Padding = UDimNew(0, 12),
+                        SortOrder = Enum.SortOrder.LayoutOrder
+                    })        
+                    
+                    Items["RightColumn"] = Instances:Create("ScrollingFrame", {
+                        Parent = Items["Page"].Instance,
+                        Name = "\0",
+                        ScrollBarImageColor3 = FromRGB(0, 0, 0),
+                        Active = true,
+                        AutomaticCanvasSize = Enum.AutomaticSize.Y,
+                        ScrollBarThickness = 0,
+                        BackgroundTransparency = 1,
+                        Size = UDim2New(0, 100, 0, 100),
+                        BackgroundColor3 = FromRGB(255, 255, 255),
+                        BorderColor3 = FromRGB(0, 0, 0),
+                        BorderSizePixel = 0,
+                        CanvasSize = UDim2New(0, 0, 0, 0)
+                    })
+                    
+                    Instances:Create("UIPadding", {
+                        Parent = Items["RightColumn"].Instance,
+                        Name = "\0",
+                        PaddingTop = UDimNew(0, 18),
+                        PaddingBottom = UDimNew(0, 18),
+                        PaddingRight = UDimNew(0, 18),
+                        PaddingLeft = UDimNew(0, 8)
+                    })
+                    
+                    Instances:Create("UIListLayout", {
+                        Parent = Items["RightColumn"].Instance,
+                        Padding = UDimNew(0, 12),
+                        SortOrder = Enum.SortOrder.LayoutOrder
+                    })        
+
+                    Page.ColumnsData[1] = Items["LeftColumn"]
+                    Page.ColumnsData[2] = Items["RightColumn"]
+                end
 
                 Items["Accent"] = Instances:Create("Frame", {
                     Parent = Items["Inactive"].Instance,
@@ -2851,10 +3095,7 @@ local Library do
                     Parent = Items["Accent"].Instance,
                     Name = "\0",
                     CornerRadius = UDimNew(0, 10)
-                })    
-
-                Page.ColumnsData[1] = Items["LeftColumn"]
-                Page.ColumnsData[2] = Items["RightColumn"]
+                })
                 Page.Items = Items
             end
 
@@ -3086,6 +3327,7 @@ local Library do
                 Page = self.Page,
                 Section = self,
                 Name = Data.Name or Data.name or "Toggle",
+                Icon = Data.Icon or Data.icon or nil,
                 Flag = Data.Flag or Data.flag or Library:NextFlag(),
                 Default = Data.Default or Data.default or false,
                 Callback = Data.Callback or Data.callback or function() end,
@@ -3102,100 +3344,111 @@ local Library do
                     Text = "",
                     AutoButtonColor = false,
                     BackgroundTransparency = 1,
-                    Size = UDim2New(1, 0, 0, 18),
+                    Size = UDim2New(1, 0, 0, 26),
                     BorderSizePixel = 0,
                     TextSize = 14,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 })
                 
-                Items["Indicator"] = Instances:Create("Frame", {
-                    Parent = Items["Toggle"].Instance,
-                    Name = "\0",
-                    BorderColor3 = FromRGB(0, 0, 0),
-                    Size = UDim2New(0, 18, 0, 18),
-                    BorderSizePixel = 0,
-                    BackgroundColor3 = FromRGB(26, 29, 35)
-                })  
-                Items["Indicator"]:AddToTheme({BackgroundColor3 = "Element"})
-                
-                Instances:Create("UICorner", {
-                    Parent = Items["Indicator"].Instance,
-                    Name = " ",
-                    CornerRadius = UDimNew(0, 6)
-                })
-                
-                Instances:Create("UIStroke", {
-                    Parent = Items["Indicator"].Instance,
-                    Name = "\0",
-                    Color = FromRGB(34, 38, 44),
-                    ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-                }):AddToTheme({Color = "Outline"})
-                
-                Items["Accent"] = Instances:Create("Frame", {
-                    Parent = Items["Indicator"].Instance,
-                    Name = "\0",
-                    BackgroundTransparency = 1,
-                    Position = UDim2New(0.5, 0, 0.5, 0),
-                    AnchorPoint = Vector2New(0.5, 0.5),
-                    BorderColor3 = FromRGB(0, 0, 0),
-                    Size = UDim2New(0, 0, 0, 0),
-                    BorderSizePixel = 0,
-                    BackgroundColor3 = FromRGB(136, 162, 255)
-                })  
-                Items["Accent"]:AddToTheme({BackgroundColor3 = "Accent"})
-                
-                Instances:Create("UICorner", {
-                    Parent = Items["Accent"].Instance,
-                    Name = "\0",
-                    CornerRadius = UDimNew(0, 6)
-                })
-                
-                Items["CheckImage"] = Instances:Create("ImageLabel", {
-                    Parent = Items["Accent"].Instance,
-                    Name = "\0",
-                    ImageColor3 = FromRGB(16, 18, 22),
-                    ImageTransparency = 1,
-                    BorderColor3 = FromRGB(0, 0, 0),
-                    AnchorPoint = Vector2New(0.5, 0.5),
-                    Image = "rbxassetid://74979969250992",
-                    BackgroundTransparency = 1,
-                    Rotation = 85,
-                    Position = UDim2New(0.5, 0, 0.5, 0),
-                    Size = UDim2New(0, 10, 0, 10),
-                    BorderSizePixel = 0,
-                    BackgroundColor3 = FromRGB(255, 255, 255)
-                })  
-                
+                local hasIcon = Toggle.Icon ~= nil
+                local textOffset = 0
+                if hasIcon then
+                    textOffset = 30
+                    Items["IconBadge"] = Instances:Create("Frame", {
+                        Parent = Items["Toggle"].Instance,
+                        Name = "IconBadge",
+                        AnchorPoint = Vector2New(0, 0.5),
+                        Position = UDim2New(0, 0, 0.5, 0),
+                        Size = UDim2New(0, 22, 0, 22),
+                        BackgroundColor3 = FromRGB(22, 26, 36),
+                        BorderSizePixel = 0
+                    })
+                    Instances:Create("UICorner", {
+                        Parent = Items["IconBadge"].Instance,
+                        CornerRadius = UDimNew(0, 6)
+                    })
+                    Instances:Create("UIStroke", {
+                        Parent = Items["IconBadge"].Instance,
+                        Color = FromRGB(36, 42, 56),
+                        Thickness = 1,
+                        ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+                    })
+                    local iconStr = tostring(Toggle.Icon)
+                    if not iconStr:find("rbxassetid://") and not iconStr:find("http") then
+                        iconStr = "rbxassetid://" .. iconStr
+                    end
+                    Items["IconImg"] = Instances:Create("ImageLabel", {
+                        Parent = Items["IconBadge"].Instance,
+                        AnchorPoint = Vector2New(0.5, 0.5),
+                        Position = UDim2New(0.5, 0, 0.5, 0),
+                        Size = UDim2New(0, 13, 0, 13),
+                        Image = iconStr,
+                        ImageColor3 = FromRGB(145, 152, 170),
+                        BackgroundTransparency = 1,
+                        BorderSizePixel = 0
+                    })
+                end
+
                 Items["Text"] = Instances:Create("TextLabel", {
                     Parent = Items["Toggle"].Instance,
                     Name = "\0",
                     FontFace = Library.Font,
-                    TextColor3 = FromRGB(150, 154, 162),
+                    TextColor3 = FromRGB(165, 172, 188),
                     BorderColor3 = FromRGB(0, 0, 0),
                     Text = Toggle.Name,
-                    Size = UDim2New(0, 0, 0, 15),
+                    Size = UDim2New(1, -(textOffset + 48), 0, 18),
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, 26, 0, 1),
+                    AnchorPoint = Vector2New(0, 0.5),
+                    Position = UDim2New(0, textOffset, 0.5, 0),
                     BorderSizePixel = 0,
-                    AutomaticSize = Enum.AutomaticSize.X,
-                    TextSize = 14,
+                    TextXAlignment = Enum.TextXAlignment.Left,
+                    TextSize = 13,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 })  
                 Items["Text"]:AddToTheme({TextColor3 = "Dark Text"})
                 
+                -- Modern Pill Switch Track on Right
+                Items["Track"] = Instances:Create("Frame", {
+                    Parent = Items["Toggle"].Instance,
+                    Name = "SwitchTrack",
+                    AnchorPoint = Vector2New(1, 0.5),
+                    Position = UDim2New(1, 0, 0.5, 0),
+                    Size = UDim2New(0, 36, 0, 18),
+                    BackgroundColor3 = FromRGB(38, 42, 54),
+                    BorderSizePixel = 0
+                })
+                Instances:Create("UICorner", {
+                    Parent = Items["Track"].Instance,
+                    CornerRadius = UDimNew(1, 0)
+                })
+                
+                -- Sliding Knob
+                Items["Knob"] = Instances:Create("Frame", {
+                    Parent = Items["Track"].Instance,
+                    Name = "SwitchKnob",
+                    AnchorPoint = Vector2New(0, 0.5),
+                    Position = UDim2New(0, 2, 0.5, 0),
+                    Size = UDim2New(0, 14, 0, 14),
+                    BackgroundColor3 = FromRGB(245, 246, 250),
+                    BorderSizePixel = 0
+                })
+                Instances:Create("UICorner", {
+                    Parent = Items["Knob"].Instance,
+                    CornerRadius = UDimNew(1, 0)
+                })
+
                 Items["SubElements"] = Instances:Create("Frame", {
                     Parent = Items["Toggle"].Instance,
                     Name = "\0",
                     BorderColor3 = FromRGB(0, 0, 0),
-                    AnchorPoint = Vector2New(1, 0),
+                    AnchorPoint = Vector2New(1, 0.5),
                     BackgroundTransparency = 1,
-                    Position = UDim2New(1, 0, 0, 0),
+                    Position = UDim2New(1, -44, 0.5, 0),
                     Size = UDim2New(0, 0, 1, 0),
                     BorderSizePixel = 0,
                     AutomaticSize = Enum.AutomaticSize.X,
                     BackgroundColor3 = FromRGB(255, 255, 255)
                 })
-                
                 Instances:Create("UIListLayout", {
                     Parent = Items["SubElements"].Instance,
                     Name = "\0",
@@ -3204,18 +3457,22 @@ local Library do
                     HorizontalAlignment = Enum.HorizontalAlignment.Right,
                     Padding = UDimNew(0, 5),
                     SortOrder = Enum.SortOrder.LayoutOrder
-                })                
+                })
+
+                Items["Toggle"]:Connect("MouseButton1Click", function()
+                    Toggle:Set(not Toggle.Value)
+                end)
 
                 Items["Toggle"]:OnHover(function()
                     if Toggle.Value then return end
-                    Items["Text"]:ChangeItemTheme({TextColor3 = "Text"})
                     Items["Text"]:Tween(nil, {TextColor3 = Library.Theme.Text})
+                    Items["Track"]:Tween(nil, {BackgroundColor3 = FromRGB(46, 52, 66)})
                 end)
 
                 Items["Toggle"]:OnHoverLeave(function()
                     if Toggle.Value then return end
-                    Items["Text"]:ChangeItemTheme({TextColor3 = "Dark Text"})
                     Items["Text"]:Tween(nil, {TextColor3 = Library.Theme["Dark Text"]})
+                    Items["Track"]:Tween(nil, {BackgroundColor3 = FromRGB(38, 42, 54)})
                 end)
             end
 
@@ -3228,15 +3485,29 @@ local Library do
                 Library.Flags[Toggle.Flag] = Value 
 
                 if Toggle.Value then 
-                    Items["Accent"]:Tween(TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0, Size = UDim2New(1, 0, 1, 0)})
-                    Items["Text"]:ChangeItemTheme({TextColor3 = "Text"})
-                    Items["Text"]:Tween(nil, {TextColor3 = Library.Theme.Text})
-                    Items["CheckImage"]:Tween(nil, {Rotation = 0, ImageTransparency = 0})
+                    Items["Track"]:Tween(TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                        BackgroundColor3 = Library.Theme["Accent"] or FromRGB(99, 102, 241)
+                    })
+                    Items["Knob"]:Tween(TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                        Position = UDim2New(1, -16, 0.5, 0),
+                        BackgroundColor3 = FromRGB(255, 255, 255)
+                    })
+                    Items["Text"]:Tween(TweenInfo.new(0.18), {TextColor3 = FromRGB(255, 255, 255)})
+                    if Items["IconImg"] then
+                        Items["IconImg"]:Tween(TweenInfo.new(0.18), {ImageColor3 = Library.Theme["Accent"] or FromRGB(129, 140, 248)})
+                    end
                 else
-                    Items["Accent"]:Tween(TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 1, Size = UDim2New(0, 0, 0, 0)})
-                    Items["Text"]:ChangeItemTheme({TextColor3 = "Dark Text"})
-                    Items["Text"]:Tween(nil, {TextColor3 = Library.Theme["Dark Text"]})
-                    Items["CheckImage"]:Tween(nil, {Rotation = 85, ImageTransparency = 1})
+                    Items["Track"]:Tween(TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                        BackgroundColor3 = FromRGB(38, 42, 54)
+                    })
+                    Items["Knob"]:Tween(TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                        Position = UDim2New(0, 2, 0.5, 0),
+                        BackgroundColor3 = FromRGB(220, 225, 235)
+                    })
+                    Items["Text"]:Tween(TweenInfo.new(0.18), {TextColor3 = Library.Theme["Dark Text"]})
+                    if Items["IconImg"] then
+                        Items["IconImg"]:Tween(TweenInfo.new(0.18), {ImageColor3 = FromRGB(145, 152, 170)})
+                    end
                 end
 
                 if Toggle.Callback then 
@@ -4426,6 +4697,328 @@ local Library do
             end
 
             return Textbox
+        end
+
+        Library.Sections.StatusDashboard = function(self, Config)
+            Config = Config or {}
+            local Section = self
+            local Content = Section.Items["Content"].Instance
+
+            -- Header right button: Refresh
+            local RefreshBtn = Instances:Create("TextButton", {
+                Parent = Section.Items["Section"].Instance,
+                Name = "RefreshButton",
+                AnchorPoint = Vector2New(1, 0),
+                Position = UDim2New(1, -14, 0, 11),
+                Size = UDim2New(0, 76, 0, 24),
+                BackgroundColor3 = FromRGB(22, 26, 36),
+                BorderColor3 = FromRGB(0, 0, 0),
+                Text = "   Refresh",
+                TextColor3 = FromRGB(215, 222, 238),
+                TextSize = 11,
+                FontFace = Library.Font,
+                BorderSizePixel = 0,
+                AutoButtonColor = false
+            })
+            Instances:Create("UICorner", {
+                Parent = RefreshBtn.Instance,
+                CornerRadius = UDimNew(0, 6)
+            })
+            local RefStroke = Instances:Create("UIStroke", {
+                Parent = RefreshBtn.Instance,
+                Color = FromRGB(38, 44, 58),
+                Thickness = 1,
+                ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+            })
+            local RefIcon = Instances:Create("ImageLabel", {
+                Parent = RefreshBtn.Instance,
+                AnchorPoint = Vector2New(0, 0.5),
+                Position = UDim2New(0, 8, 0.5, 0),
+                Size = UDim2New(0, 11, 0, 11),
+                Image = "rbxassetid://10709791175",
+                ImageColor3 = FromRGB(215, 222, 238),
+                BackgroundTransparency = 1,
+                BorderSizePixel = 0
+            })
+
+            -- Status rows definition
+            local rowsDef = {
+                { id = "Application", name = "Application", icon = "10709790321", defaultDot = Color3.fromRGB(34, 197, 94), defaultText = "Running", textColor = Color3.fromRGB(34, 197, 94) },
+                { id = "Auto Farm",   name = "Auto Farm",   icon = "10709791437", defaultDot = Color3.fromRGB(130, 138, 155), defaultText = "Disabled", textColor = Color3.fromRGB(140, 146, 162) },
+                { id = "FPS Boost",   name = "FPS Boost",   icon = "10709790158", defaultDot = Color3.fromRGB(130, 138, 155), defaultText = "Disabled", textColor = Color3.fromRGB(140, 146, 162) },
+                { id = "Hide Name",   name = "Hide Name",   icon = "10709790387", defaultDot = Color3.fromRGB(130, 138, 155), defaultText = "Disabled", textColor = Color3.fromRGB(140, 146, 162) },
+                { id = "Session Time",name = "Session Time",icon = "10709790202", defaultDot = nil, defaultText = "00:00:00", textColor = Color3.fromRGB(240, 243, 252) },
+            }
+
+            local rowElements = {}
+
+            for _, r in ipairs(rowsDef) do
+                local rowFrame = Instances:Create("Frame", {
+                    Parent = Content,
+                    Name = "Row_" .. r.id,
+                    Size = UDim2New(1, 0, 0, 22),
+                    BackgroundTransparency = 1,
+                    BorderSizePixel = 0
+                })
+
+                local iconImg = Instances:Create("ImageLabel", {
+                    Parent = rowFrame.Instance,
+                    AnchorPoint = Vector2New(0, 0.5),
+                    Position = UDim2New(0, 0, 0.5, 0),
+                    Size = UDim2New(0, 14, 0, 14),
+                    Image = "rbxassetid://" .. r.icon,
+                    ImageColor3 = Library.Theme["Accent"] or FromRGB(129, 140, 248),
+                    BackgroundTransparency = 1,
+                    BorderSizePixel = 0
+                })
+
+                local nameLbl = Instances:Create("TextLabel", {
+                    Parent = rowFrame.Instance,
+                    FontFace = Library.Font,
+                    TextColor3 = FromRGB(165, 172, 188),
+                    Text = r.name,
+                    TextSize = 12,
+                    TextXAlignment = Enum.TextXAlignment.Left,
+                    AnchorPoint = Vector2New(0, 0.5),
+                    Position = UDim2New(0, 22, 0.5, 0),
+                    Size = UDim2New(0.48, 0, 1, 0),
+                    BackgroundTransparency = 1,
+                    BorderSizePixel = 0
+                })
+
+                local rightHolder = Instances:Create("Frame", {
+                    Parent = rowFrame.Instance,
+                    AnchorPoint = Vector2New(1, 0.5),
+                    Position = UDim2New(1, 0, 0.5, 0),
+                    Size = UDim2New(0.5, 0, 1, 0),
+                    BackgroundTransparency = 1,
+                    BorderSizePixel = 0
+                })
+                Instances:Create("UIListLayout", {
+                    Parent = rightHolder.Instance,
+                    FillDirection = Enum.FillDirection.Horizontal,
+                    HorizontalAlignment = Enum.HorizontalAlignment.Right,
+                    VerticalAlignment = Enum.VerticalAlignment.Center,
+                    Padding = UDimNew(0, 6)
+                })
+
+                local dotFrame = nil
+                if r.defaultDot then
+                    dotFrame = Instances:Create("Frame", {
+                        Parent = rightHolder.Instance,
+                        Name = "IndicatorDot",
+                        Size = UDim2New(0, 6, 0, 6),
+                        BackgroundColor3 = r.defaultDot,
+                        BorderSizePixel = 0
+                    })
+                    Instances:Create("UICorner", {
+                        Parent = dotFrame.Instance,
+                        CornerRadius = UDimNew(1, 0)
+                    })
+                end
+
+                local valLbl = Instances:Create("TextLabel", {
+                    Parent = rightHolder.Instance,
+                    Name = "ValueLabel",
+                    FontFace = Library.Font,
+                    TextColor3 = r.textColor,
+                    Text = r.defaultText,
+                    TextSize = 12,
+                    AutomaticSize = Enum.AutomaticSize.X,
+                    Size = UDim2New(0, 0, 1, 0),
+                    BackgroundTransparency = 1,
+                    BorderSizePixel = 0
+                })
+
+                rowElements[r.id] = {
+                    Row = rowFrame,
+                    Dot = dotFrame,
+                    Value = valLbl
+                }
+            end
+
+            -- Bottom Action Buttons Container (View Logs & Reset Settings)
+            local btnHolder = Instances:Create("Frame", {
+                Parent = Content,
+                Name = "ActionButtons",
+                Size = UDim2New(1, 0, 0, 28),
+                BackgroundTransparency = 1,
+                BorderSizePixel = 0
+            })
+            Instances:Create("UIListLayout", {
+                Parent = btnHolder.Instance,
+                FillDirection = Enum.FillDirection.Horizontal,
+                Padding = UDimNew(0, 8)
+            })
+
+            -- View Logs Button
+            local ViewLogsBtn = Instances:Create("TextButton", {
+                Parent = btnHolder.Instance,
+                Name = "ViewLogsBtn",
+                Size = UDim2New(0.48, -4, 1, 0),
+                BackgroundColor3 = FromRGB(20, 24, 32),
+                BorderSizePixel = 0,
+                AutoButtonColor = false,
+                Text = "",
+            })
+            Instances:Create("UICorner", { Parent = ViewLogsBtn.Instance, CornerRadius = UDimNew(0, 6) })
+            Instances:Create("UIStroke", { Parent = ViewLogsBtn.Instance, Color = FromRGB(36, 42, 56), Thickness = 1 })
+            
+            local LogsIcon = Instances:Create("ImageLabel", {
+                Parent = ViewLogsBtn.Instance,
+                AnchorPoint = Vector2New(0, 0.5),
+                Position = UDim2New(0, 8, 0.5, 0),
+                Size = UDim2New(0, 12, 0, 12),
+                Image = "rbxassetid://10709790448",
+                ImageColor3 = Library.Theme["Accent"] or FromRGB(129, 140, 248),
+                BackgroundTransparency = 1,
+                BorderSizePixel = 0
+            })
+            local LogsText = Instances:Create("TextLabel", {
+                Parent = ViewLogsBtn.Instance,
+                AnchorPoint = Vector2New(0, 0.5),
+                Position = UDim2New(0, 24, 0.5, 0),
+                Size = UDim2New(1, -38, 1, 0),
+                FontFace = Library.Font,
+                Text = "View Logs",
+                TextColor3 = FromRGB(220, 226, 240),
+                TextSize = 11,
+                TextXAlignment = Enum.TextXAlignment.Left,
+                BackgroundTransparency = 1,
+                BorderSizePixel = 0
+            })
+            local LogsArrow = Instances:Create("TextLabel", {
+                Parent = ViewLogsBtn.Instance,
+                AnchorPoint = Vector2New(1, 0.5),
+                Position = UDim2New(1, -8, 0.5, 0),
+                Size = UDim2New(0, 10, 1, 0),
+                FontFace = Library.Font,
+                Text = ">",
+                TextColor3 = FromRGB(130, 138, 155),
+                TextSize = 11,
+                BackgroundTransparency = 1,
+                BorderSizePixel = 0
+            })
+
+            -- Reset Settings Button
+            local ResetBtn = Instances:Create("TextButton", {
+                Parent = btnHolder.Instance,
+                Name = "ResetSettingsBtn",
+                Size = UDim2New(0.52, -4, 1, 0),
+                BackgroundColor3 = FromRGB(20, 24, 32),
+                BorderSizePixel = 0,
+                AutoButtonColor = false,
+                Text = "",
+            })
+            Instances:Create("UICorner", { Parent = ResetBtn.Instance, CornerRadius = UDimNew(0, 6) })
+            Instances:Create("UIStroke", { Parent = ResetBtn.Instance, Color = FromRGB(36, 42, 56), Thickness = 1 })
+            
+            local ResetIcon = Instances:Create("ImageLabel", {
+                Parent = ResetBtn.Instance,
+                AnchorPoint = Vector2New(0, 0.5),
+                Position = UDim2New(0, 8, 0.5, 0),
+                Size = UDim2New(0, 12, 0, 12),
+                Image = "rbxassetid://10709791281",
+                ImageColor3 = Library.Theme["Accent"] or FromRGB(129, 140, 248),
+                BackgroundTransparency = 1,
+                BorderSizePixel = 0
+            })
+            local ResetText = Instances:Create("TextLabel", {
+                Parent = ResetBtn.Instance,
+                AnchorPoint = Vector2New(0, 0.5),
+                Position = UDim2New(0, 24, 0.5, 0),
+                Size = UDim2New(1, -38, 1, 0),
+                FontFace = Library.Font,
+                Text = "Reset Settings",
+                TextColor3 = FromRGB(220, 226, 240),
+                TextSize = 11,
+                TextXAlignment = Enum.TextXAlignment.Left,
+                BackgroundTransparency = 1,
+                BorderSizePixel = 0
+            })
+            local ResetArrow = Instances:Create("TextLabel", {
+                Parent = ResetBtn.Instance,
+                AnchorPoint = Vector2New(1, 0.5),
+                Position = UDim2New(1, -8, 0.5, 0),
+                Size = UDim2New(0, 10, 1, 0),
+                FontFace = Library.Font,
+                Text = ">",
+                TextColor3 = FromRGB(130, 138, 155),
+                TextSize = 11,
+                BackgroundTransparency = 1,
+                BorderSizePixel = 0
+            })
+
+            ViewLogsBtn:OnHover(function()
+                ViewLogsBtn:Tween(nil, {BackgroundColor3 = FromRGB(28, 34, 46)})
+            end)
+            ViewLogsBtn:OnHoverLeave(function()
+                ViewLogsBtn:Tween(nil, {BackgroundColor3 = FromRGB(20, 24, 32)})
+            end)
+
+            ResetBtn:OnHover(function()
+                ResetBtn:Tween(nil, {BackgroundColor3 = FromRGB(28, 34, 46)})
+            end)
+            ResetBtn:OnHoverLeave(function()
+                ResetBtn:Tween(nil, {BackgroundColor3 = FromRGB(20, 24, 32)})
+            end)
+
+            RefreshBtn:OnHover(function()
+                RefreshBtn:Tween(nil, {BackgroundColor3 = FromRGB(30, 36, 50)})
+            end)
+            RefreshBtn:OnHoverLeave(function()
+                RefreshBtn:Tween(nil, {BackgroundColor3 = FromRGB(22, 26, 36)})
+            end)
+
+            local Controller = {}
+
+            function Controller:SetStatus(id, stateBool, onText, offText)
+                local item = rowElements[id]
+                if not item then return end
+                onText = onText or "Active"
+                offText = offText or "Disabled"
+                if stateBool then
+                    if item.Dot then
+                        item.Dot:Tween(TweenInfo.new(0.18), {BackgroundColor3 = (id == "Auto Farm" and (Library.Theme["Accent"] or Color3.fromRGB(99, 102, 241)) or Color3.fromRGB(34, 197, 94))})
+                    end
+                    item.Value.Instance.TextColor3 = (id == "Auto Farm" and (Library.Theme["Accent"] or Color3.fromRGB(129, 140, 248)) or Color3.fromRGB(34, 197, 94))
+                    item.Value.Instance.Text = onText
+                else
+                    if item.Dot then
+                        item.Dot:Tween(TweenInfo.new(0.18), {BackgroundColor3 = Color3.fromRGB(130, 138, 155)})
+                    end
+                    item.Value.Instance.TextColor3 = Color3.fromRGB(140, 146, 162)
+                    item.Value.Instance.Text = offText
+                end
+            end
+
+            function Controller:SetTime(timeStr)
+                local item = rowElements["Session Time"]
+                if item and item.Value then
+                    item.Value.Instance.Text = tostring(timeStr)
+                end
+            end
+
+            RefreshBtn:Connect("MouseButton1Click", function()
+                RefIcon:Tween(TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = RefIcon.Instance.Rotation + 360})
+                if Config.OnRefresh then
+                    Library:SafeCall(Config.OnRefresh)
+                end
+            end)
+
+            ViewLogsBtn:Connect("MouseButton1Click", function()
+                if Config.OnViewLogs then
+                    Library:SafeCall(Config.OnViewLogs)
+                end
+            end)
+
+            ResetBtn:Connect("MouseButton1Click", function()
+                if Config.OnReset then
+                    Library:SafeCall(Config.OnReset)
+                end
+            end)
+
+            return Controller
         end
     end
 
