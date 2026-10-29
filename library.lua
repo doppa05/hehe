@@ -3459,9 +3459,7 @@ local Library do
                     SortOrder = Enum.SortOrder.LayoutOrder
                 })
 
-                Items["Toggle"]:Connect("MouseButton1Click", function()
-                    Toggle:Set(not Toggle.Value)
-                end)
+
 
                 Items["Toggle"]:OnHover(function()
                     if Toggle.Value then return end
@@ -3578,9 +3576,15 @@ local Library do
                 TableInsert(PageSearchData, SearchData)
             end
 
+            local toggleDebounce = false
             Items["Toggle"]:Connect("InputBegan", function(Input)
                 if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
+                    if toggleDebounce then return end
+                    toggleDebounce = true
                     Toggle:Set(not Toggle.Value)
+                    task.delay(0.2, function()
+                        toggleDebounce = false
+                    end)
                 end
             end)
 
